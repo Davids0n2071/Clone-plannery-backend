@@ -1,14 +1,23 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
 import os
+import json
 
-# Inicializa Firebase solo una vez cuando arranca el servidor
+
 def init_firebase():
-    if not firebase_admin._apps:  # evita inicializarlo dos veces
-        cred_path = os.getenv("FIREBASE_CREDENTIALS", "serviceAccount.json")
-        cred = credentials.Certificate(cred_path)
+    if not firebase_admin._apps:
+        firebase_credentials = os.getenv("FIREBASE_CREDENTIALS", "serviceAccount.json")
+
+        # Si empieza con { es un JSON completo (caso Render)
+        # Si no, es una ruta de archivo (caso local)
+        if firebase_credentials.strip().startswith("{"):
+            cred_dict = json.loads(firebase_credentials)
+            cred = credentials.Certificate(cred_dict)
+        else:
+            cred = credentials.Certificate(firebase_credentials)
+
         firebase_admin.initialize_app(cred)
 
+
 def get_db():
-    """Devuelve el cliente de Firestore listo para usar."""
     return firestore.client()
