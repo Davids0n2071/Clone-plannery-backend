@@ -15,3 +15,4 @@ class PlaceResult(BaseModel):
     longitude: float
     rating: Optional[float] = None   # Optional = puede venir vacío
     photo_url: Optional[str] = None
+    category: Optional[str] = None

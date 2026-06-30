@@ -10,6 +10,7 @@ class PlanCreate(BaseModel):
     longitude: float
     rating: Optional[float] = None
     photo_url: Optional[str] = None
+    category: Optional[str] = None
 
 # Lo que devolvemos al frontend (incluye el id generado por Firestore)
 class PlanResponse(BaseModel):
@@ -21,3 +22,4 @@ class PlanResponse(BaseModel):
     longitude: float
     rating: Optional[float] = None
     photo_url: Optional[str] = None
+    category: Optional[str] = None

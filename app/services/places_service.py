@@ -8,6 +8,44 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_PLACES_API_KEY")
 GOOGLE_PLACES_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 GOOGLE_PHOTO_URL = "https://maps.googleapis.com/maps/api/place/photo"
 
+def get_category(place: dict, query: str) -> str:
+    """
+    Intenta obtener la categoría del lugar.
+    Primero mira los tipos que devuelve Google.
+    Si no hay nada útil, usa el query del usuario.
+    """
+    # tipos que devuelve Google y su traducción legible
+    type_map = {
+        "restaurant": "Restaurante",
+        "food": "Restaurante",
+        "cafe": "Café",
+        "bar": "Bar",
+        "night_club": "Discoteca",
+        "museum": "Museo",
+        "park": "Parque",
+        "shopping_mall": "Centro comercial",
+        "store": "Tienda",
+        "gym": "Gimnasio",
+        "movie_theater": "Cine",
+        "tourist_attraction": "Atracción turística",
+        "church": "Iglesia",
+        "hospital": "Hospital",
+        "school": "Colegio",
+        "university": "Universidad",
+        "lodging": "Hotel",
+        "spa": "Spa",
+        "amusement_park": "Parque de diversiones",
+        "stadium": "Estadio",
+    }
+
+    types = place.get("types", [])
+    for t in types:
+        if t in type_map:
+            return type_map[t]
+
+    # si Google no devolvió un tipo reconocido, usa el query
+    return query.capitalize()
+
 async def search_places(query: str, latitude: float, longitude: float) -> list[PlaceResult]:
     """
     Llama a Google Places API y devuelve una lista de lugares.
@@ -65,7 +103,8 @@ async def search_places(query: str, latitude: float, longitude: float) -> list[P
             latitude=location.get("lat", 0.0),
             longitude=location.get("lng", 0.0),
             rating=place.get("rating"),       # None si no tiene rating
-            photo_url=photo_url
+            photo_url=photo_url,
+            category = get_category(place, query)
         ))
 
     return results

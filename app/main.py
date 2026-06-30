@@ -22,10 +22,10 @@ app.add_middleware(
 )
 
 
-from app.routes import places, plans, chat  # ← agrega chat
+from app.routes import places, plans, chat
 app.include_router(places.router)
 app.include_router(plans.router)
-app.include_router(chat.router)             # ← NUEVO
+app.include_router(chat.router)
 
 @app.get("/health")
 def health_check():
