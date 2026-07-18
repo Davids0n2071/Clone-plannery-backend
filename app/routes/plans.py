@@ -12,14 +12,11 @@ def create_plan_endpoint(plan: PlanCreate):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al guardar el plan: {str(e)}")
 
-
-@router.get("/{user_id}", response_model=list[PlanResponse])
 def get_plans_endpoint(user_id: str):
     try:
         return get_plans_by_user(user_id)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al obtener los planes: {str(e)}")
-
 
 @router.delete("/{plan_id}")
 def delete_plan_endpoint(plan_id: str):

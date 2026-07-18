@@ -16,3 +16,4 @@ class ChatRequest(BaseModel):
 # Lo que devolvemos al frontend
 class ChatResponse(BaseModel):
     respuesta: str
+

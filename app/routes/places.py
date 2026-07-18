@@ -4,13 +4,16 @@ from app.models.places import PlaceSearchRequest, PlaceResult
 from app.services.places_service import search_places
 
 router = APIRouter(prefix="/places", tags=["places"])
-
+request_count=0
 @router.post("/search", response_model=list[PlaceResult])
 async def search_places_endpoint(request: PlaceSearchRequest):
     """
     Recibe query + coordenadas y devuelve lista de lugares de Google.
     """
+    global request_count
+    request_count=request_count+1
     try:
+
         places = await search_places(
             query=request.query,
             latitude=request.latitude,

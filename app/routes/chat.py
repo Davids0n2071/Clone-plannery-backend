@@ -49,3 +49,4 @@ def chat_endpoint(request: ChatRequest):
                 "error_mensaje": str(e)
             }
         )
+

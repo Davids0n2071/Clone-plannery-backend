@@ -16,3 +16,4 @@ class PlaceResult(BaseModel):
     rating: Optional[float] = None   # Optional = puede venir vacío
     photo_url: Optional[str] = None
     category: Optional[str] = None
+    description : Optional[str] = None

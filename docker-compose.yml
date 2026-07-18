@@ -1,0 +1,10 @@
+services:
+  backend:
+    build: .
+    container_name: plannery-backend
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./serviceAccount.json:/app/serviceAccount.json

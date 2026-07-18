@@ -11,6 +11,7 @@ class PlanCreate(BaseModel):
     rating: Optional[float] = None
     photo_url: Optional[str] = None
     category: Optional[str] = None
+    notes: Optional[str] = None
 
 # Lo que devolvemos al frontend (incluye el id generado por Firestore)
 class PlanResponse(BaseModel):
